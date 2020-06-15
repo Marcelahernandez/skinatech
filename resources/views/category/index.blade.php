@@ -23,6 +23,17 @@
     </div>
 </div>
 <div class="container">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            @if(!$id)
+                <li class="breadcrumb-item"><a href="#">Categorias</a></li>
+            @endif
+            @if($id)
+                <li class="breadcrumb-item"><a href="{{ url('category') }}">Categorias</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Subcategorias</li>
+            @endif
+        </ol>
+    </nav>
     <table class="table">
         <thead>
             <tr>

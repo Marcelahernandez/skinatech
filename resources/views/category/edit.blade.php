@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row">
             <div class="col-9">
-                <h2>Edicion  de usuarios</h2>
+                <h2>Edicion  de Categorias</h2>
             </div>
             <div class="col-3">
             </div>
@@ -12,6 +12,11 @@
     </div>
 </div>
 <div class="container">
+<nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            
+        </ol>
+    </nav>
 <form action="{{ url('category/update',$category->id) }}" method="POST">
     {{csrf_field() }}
     <div class="form-group">

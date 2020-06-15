@@ -12,6 +12,12 @@
     </div>
 </div>
 <div class="container">
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="#">Usuarios</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Edición de usuarios</li>
+  </ol>
+</nav>
 <form action="{{ url('users/update',$user->id) }}" method="POST">
     {{csrf_field() }}
     <div class="form-group">

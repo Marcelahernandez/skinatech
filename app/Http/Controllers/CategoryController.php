@@ -32,6 +32,7 @@ class CategoryController extends Controller
             $category->padre = $request->padre;
         }
         $category->save();
+        
         if($request->padre == ''){
             return redirect('category'); 
         } else {
@@ -52,6 +53,17 @@ class CategoryController extends Controller
         $category->status = $request->estado;
         $category->padre = $request->padre;
         $category->save(); 
+        $id = $category->id;
+        $subcategories = Category::where('padre',$id)->get();
+        
+        foreach($subcategories as $subcategory){
+            if($request->estado == 1){
+                $subcategory->status = 1;
+            }else {
+                $subcategory->status = 2;
+            }
+            $subcategory->save();
+        }
         if($category->padre != 0){
             return redirect('category/'.$category->padre);
         } else {

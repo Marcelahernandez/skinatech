@@ -17,6 +17,19 @@
     </div>
 </div>
 <div class="container">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            @if(!$id)
+                <li class="breadcrumb-item"><a href="#">Categorias</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Creación de categorias</li>
+            @endif
+            @if($id)
+                <li class="breadcrumb-item"><a href="{{ url('category') }}">Categorias</a></li>
+                <li class="breadcrumb-item active">Subcategorias</li>
+                <li class="breadcrumb-item active" aria-current="page">Creación de subcategorias</li>
+            @endif
+        </ol>
+    </nav>
     <form action="{{url('category/store')}}" method="POST">
         {{csrf_field() }}
     

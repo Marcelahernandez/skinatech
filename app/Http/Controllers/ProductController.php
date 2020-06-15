@@ -72,13 +72,42 @@ class ProductController extends Controller
             $product->image = $archivo->move('images',$nombre);
         }
         $product->save();
-        /*
+        $categoria = $request->categoria;
         $categoryProducts = new CategoryProduct;
-        $categoryProducts->id_category = $request->categoria;
-        $categoryProducts->id_products = $id;
-        $categoryProducts->nivel = 1;
-        $categoryProducts->save();
-       */
+        /**Traer categorias */
+        $productosCategory = $categoryProducts::where('id_products',$id)->where('nivel',1)->get();
+        foreach($productosCategory as $productCategory){
+            if($productCategory->id_category != $categoria){
+                CategoryProduct::where('id_products',$id)->where('nivel',1)->delete();
+                $categoryProducts->id_products = $id;
+                $categoryProducts->id_category = $categoria;
+                $categoryProducts->nivel = 1;
+                $categoryProducts->save();
+            }
+        }
+
+        /**Traer subcategorias */
+        $productosSubcategory = $categoryProducts::where('id_products',$id)->where('nivel',2)->get();
+        $subcategorias =  $request->subcategoria;
+        foreach($productosSubcategory as $productSubcategory){
+            CategoryProduct::where('id_products',$id)->where('nivel',2)->delete();
+            foreach($subcategorias as $subcategory){
+                if($productSubcategory->id_category != $subcategory){
+                    $categoryProducts = new CategoryProduct;
+                    $categoryProducts->id_products = $id;
+                    $categoryProducts->id_category = $subcategory;
+                    $categoryProducts->nivel = 2;
+                    $categoryProducts->save();
+                } 
+            }
+           
+        }
+        return redirect('products');
+    }
+
+    public function delete($id){
+        $product = Product::find($id)->delete();
+        CategoryProduct::where('id_products',$id)->delete();
         return redirect('products');
     }
 }

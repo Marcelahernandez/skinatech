@@ -12,6 +12,12 @@
     </div>
 </div>
 <div class="container">
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="#">Productos</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Creación de productos</li>
+  </ol>
+</nav>
 <form action="{{url('products/store')}}" method="POST" accept-charset="UTF-8" enctype="multipart/form-data">
     {{csrf_field() }}
    
