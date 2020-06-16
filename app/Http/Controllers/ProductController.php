@@ -10,6 +10,15 @@ use App\CategoryProduct;
 
 class ProductController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index(){
         $products = Product::all();
         return view('products.index',compact('products'));
@@ -54,7 +63,22 @@ class ProductController extends Controller
         $subcategorias = Category::subcategories($id);
         return response()->json($subcategorias);
     }
+    public function show($id){
+        $product = Product::find($id);
+        $categorias = CategoryProduct::where('id_products',$id)->where('nivel',1)->get();
+        foreach($categorias as $category){
+           $categoria = Category::where('id',$category->id_category)->first();
+        }
 
+        $subcategorias = CategoryProduct::where('id_products',$id)->where('nivel',2)->get();
+        
+        foreach($subcategorias as $key =>$subcategoria){
+            $arraySubcategorias[$key] = Category::where('id',$subcategoria->id_category)->get();
+            $nombreSubcategoria[$key] = $arraySubcategorias[$key][0]->name;
+        }
+       
+        return view('products.show', compact('product','categoria','nombreSubcategoria'));
+    }
     public function edit($id){
         $product = Product::find($id);
         $categorias =  Category::where('padre',0)->get();

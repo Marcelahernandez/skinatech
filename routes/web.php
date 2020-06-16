@@ -15,8 +15,11 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Auth::routes();
 
+Auth::routes();
+Route::get('/', function(){
+    return view('auth.login');
+});
 Route::get('/home', 'AdminController@index')->name('home');
 Route::get('/users', 'UserController@index');
 Route::get('/users/create', 'UserController@create');
@@ -32,7 +35,7 @@ Route::post('/category/store', 'CategoryController@store');
 Route::get('/category/edit/{id}', 'CategoryController@edit');
 Route::post('/category/update/{id}', 'CategoryController@update');
 Route::get('/category/delete/{id}', 'CategoryController@delete');
-
+Route::get('/category/show/{id}', 'CategoryController@show');
 
 Route::get('/products', 'ProductController@index');
 Route::get('/products/create', 'ProductController@create');
@@ -40,6 +43,10 @@ Route::post('/products/store', 'ProductController@store');
 Route::get('/products/edit/{id}', 'ProductController@edit');
 Route::post('/products/update/{id}', 'ProductController@update');
 Route::get('/products/delete/{id}', 'ProductController@delete');
-
+Route::get('/products/show/{id}', 'ProductController@show');
 Route::get('/products/subcategories/{id}','ProductController@getSubcategories');
 Route::get('/products/edit/subcategories/{id}','ProductController@getSubcategories');
+
+
+
+Route::get('/home', 'HomeController@index')->name('home');

@@ -7,6 +7,15 @@ use App\Category;
 
 class CategoryController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index($id = null){
         if($id == null){
             $category = Category::where('padre',0)->get();
@@ -41,7 +50,10 @@ class CategoryController extends Controller
 
         
     }
-
+    public function show($id){
+        $category = Category::find($id);
+        return view('category.show', compact('category'));
+    }
     public function edit($id){
         $category = Category::find($id);
         return view('category.edit', compact('category'));

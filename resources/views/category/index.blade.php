@@ -12,12 +12,15 @@
                 @endif
             </div>
             <div class="col-3">
-                @if(!$id)
-                    <a style="float:right" href="{{ url('category/create') }}"><button type="button" class="btn btn-primary">Crear </button></a>
+                @if(Auth::user()->hasRole('Administrador'))
+                    @if(!$id)
+                        <a style="float:right" href="{{ url('category/create') }}"><button type="button" class="btn btn-primary">Crear </button></a>
+                    @endif
+                    @if($id)
+                        <a style="float:right" href="{{ url('category/create',$id) }}"><button type="button" class="btn btn-primary">Crear </button></a>
+                    @endif
                 @endif
-                @if($id)
-                    <a style="float:right" href="{{ url('category/create',$id) }}"><button type="button" class="btn btn-primary">Crear </button></a>
-                @endif
+            
             </div>
         </div>
     </div>
@@ -38,7 +41,10 @@
         <thead>
             <tr>
                 <th></th>
-                <th></th>
+                @if(Auth::user()->hasRole('Administrador'))
+                    <th></th>
+                    <th></th>
+                @endif
                 @if(!$id)
                     <th></th>
                 @endif    
@@ -49,8 +55,11 @@
         <tbody>
             @foreach($category as $category)
                 <tr>
-                    <th><a href="{{ url('category/edit',$category->id) }}" data-toggle="tooltip" data-placement="top" title="Editar"><i class="fas fa-pencil-alt"></i></a></th>
-                    <th><a href="{{ url('category/delete',$category->id) }}"><i class="fas fa-trash-alt" data-toggle="tooltip" data-placement="top" title="Eliminar"></i></a></th>
+                    <th><a href="{{ url('category/show',$category->id) }}" data-toggle="tooltip" data-placement="top" title="Ver"><i class="far fa-eye"></a></i></th>
+                    @if(Auth::user()->hasRole('Administrador'))
+                        <th><a href="{{ url('category/edit',$category->id) }}" data-toggle="tooltip" data-placement="top" title="Editar"><i class="fas fa-pencil-alt"></i></a></th>
+                        <th><a href="{{ url('category/delete',$category->id) }}"><i class="fas fa-trash-alt" data-toggle="tooltip" data-placement="top" title="Eliminar"></i></a></th>
+                    @endif
                     @if(!$id)
                         <th><a href="{{ url('category',$category->id) }}"><i class="fas fa-layer-group" data-toggle="tooltip" data-placement="top" title="Subcategorias"></i></a></th>
                     @endif

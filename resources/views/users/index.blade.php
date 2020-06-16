@@ -6,9 +6,11 @@
             <div class="col-9">
                 <h2>Usuarios</h2>
             </div>
-            <div class="col-3">
-                <a style="float:right" href="{{ url('users/create') }}"><button type="button" class="btn btn-primary">Crear</button></a>
-            </div>
+            @if(Auth::user()->hasRole('Administrador'))
+                <div class="col-3">
+                    <a style="float:right" href="{{ url('users/create') }}"><button type="button" class="btn btn-primary">Crear</button></a>
+                </div>
+            @endif    
         </div>
     </div>
 </div>
@@ -21,8 +23,10 @@
     <table class="table">
         <thead>
             <tr>
+                @if(Auth::user()->hasRole('Administrador'))
                 <th></th>
                 <th></th>
+                @endif
                 <th scope="col">#</th>
                 <th scope="col">Nombre</th>
                 <th scope="col">Email</th>
@@ -33,8 +37,10 @@
         <tbody>
             @foreach($users as $user)
             <tr>
-                <th><a href="{{ url('users/edit',$user->id) }}"><i class="fas fa-pencil-alt"></i></a></th>
-                <th><a href="{{ url('users/delete',$user->id) }}"><i class="fas fa-trash-alt"></i></a></th>
+                @if(Auth::user()->hasRole('Administrador'))
+                    <th><a href="{{ url('users/edit',$user->id) }}"><i class="fas fa-pencil-alt"></i></a></th>
+                    <th><a href="{{ url('users/delete',$user->id) }}"><i class="fas fa-trash-alt"></i></a></th>
+                @endif
                 <th scope="row">{{$user->id}}</th>
                 <td>{{$user->name}}</td>
                 <td>{{$user->email}}</td>

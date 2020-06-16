@@ -8,4 +8,10 @@ class Product extends Model
 {
     protected $table = 'productos';
     protected $fillable = ['name'];
+
+    public static function categorias(){
+        return $this->belongsTo(CategoryProduct::class);
+    }
+
+    
 }
